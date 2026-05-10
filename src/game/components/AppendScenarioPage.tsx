@@ -96,6 +96,7 @@ function createEmptyScenario(): Scenario {
                 : {}),
               delayedAppearance: false,
               appearanceTimingDescription: '',
+              remark: '',
             },
           ]
         : [],
@@ -1053,6 +1054,20 @@ export function AppendScenarioPage({ onClose, initialScenarioData }: AppendScena
                   }
                 />
               ) : null}
+              <textarea
+                style={styles.npcRemarkInline}
+                placeholder="备注（可选，剧本信息页公开）"
+                value={row.remark ?? ''}
+                onChange={(e) =>
+                  setScenario((p) => {
+                    const next = [...p.ScenarioInfo.NpcRoles];
+                    next[idx] = { ...next[idx], remark: e.target.value };
+                    return { ...p, ScenarioInfo: { ...p.ScenarioInfo, NpcRoles: next } };
+                  })
+                }
+                aria-label={`${npcDisplayName(row.npcId)} 备注`}
+                rows={1}
+              />
               <button
                 type="button"
                 style={styles.smallBtn}
@@ -1094,6 +1109,7 @@ export function AppendScenarioPage({ onClose, initialScenarioData }: AppendScena
                         : {}),
                       delayedAppearance: false,
                       appearanceTimingDescription: '',
+                      remark: '',
                     },
                   ],
                   npcCount: p.ScenarioInfo.NpcRoles.length + 1,
@@ -1275,6 +1291,24 @@ const styles: Record<string, CSSProperties> = {
   h4: { margin: '14px 0 8px', color: '#f8fafc' },
   grid: { display: 'grid', gap: '10px', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' },
   row: { display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 },
+  npcRemarkInline: {
+    flex: '2 1 220px',
+    minWidth: 160,
+    maxWidth: '100%',
+    minHeight: 34,
+    maxHeight: 120,
+    resize: 'vertical' as const,
+    boxSizing: 'border-box',
+    backgroundColor: '#0f172a',
+    color: '#e2e8f0',
+    border: '1px solid #334155',
+    borderRadius: '6px',
+    padding: '6px 10px',
+    fontSize: '13px',
+    fontFamily: 'inherit',
+    lineHeight: 1.35,
+    alignSelf: 'center',
+  },
   roleAhrPairWrap: {
     display: 'flex',
     flexWrap: 'wrap',

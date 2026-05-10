@@ -700,8 +700,22 @@ export function ClosedScriptScenarioSheet({
                       backgroundColor: i % 2 === 1 ? 'rgba(30, 41, 59, 0.35)' : 'transparent',
                     }}
                   >
-                    <td style={sheetStyles.castTd}>
+                    <td style={{ ...sheetStyles.castTd, verticalAlign: 'top' }}>
                       <span style={sheetStyles.castNpcName}>{npcDisplayName(nr.npcId)}</span>
+                      {(nr.remark ?? '').trim() ? (
+                        <div
+                          style={{
+                            marginTop: 6,
+                            fontSize: '12px',
+                            color: '#94a3b8',
+                            whiteSpace: 'pre-wrap',
+                            lineHeight: 1.45,
+                            fontWeight: 'normal',
+                          }}
+                        >
+                          备注：{(nr.remark ?? '').trim()}
+                        </div>
+                      ) : null}
                     </td>
                     <td style={sheetStyles.castTdFeat}>
                       {showFeat && feats.includes('必定无视友好') ? '✓' : <span style={sheetStyles.castFeatEmpty}>—</span>}

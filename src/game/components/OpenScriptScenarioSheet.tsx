@@ -41,7 +41,23 @@ export function OpenScriptScenarioSheet(props: OpenScriptScenarioSheetProps) {
       <h3 style={{ margin: '18px 0 8px', fontSize: '15px', color: '#94a3b8' }}>登场人物（公开）</h3>
       <ul style={{ margin: 0, paddingLeft: '20px', color: '#e2e8f0', fontSize: '14px', lineHeight: 1.7 }}>
         {info.NpcRoles.map((nr) => (
-          <li key={nr.npcId}>{npcDisplayName(nr.npcId)}</li>
+          <li key={nr.npcId}>
+            <div>{npcDisplayName(nr.npcId)}</div>
+            {(nr.remark ?? '').trim() ? (
+              <div
+                style={{
+                  marginTop: '4px',
+                  marginLeft: '0',
+                  fontSize: '13px',
+                  color: '#94a3b8',
+                  whiteSpace: 'pre-wrap',
+                  lineHeight: 1.5,
+                }}
+              >
+                备注：{(nr.remark ?? '').trim()}
+              </div>
+            ) : null}
+          </li>
         ))}
       </ul>
       <h3 style={{ margin: '18px 0 8px', fontSize: '15px', color: '#94a3b8' }}>事件日程（公开）</h3>

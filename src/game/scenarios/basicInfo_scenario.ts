@@ -70,6 +70,8 @@ export interface NpcRole {
   delayedAppearance?: boolean;
   /** 仅 delayedAppearance=true 时有效：描述登场时机 */
   appearanceTimingDescription?: string;
+  /** 登场人物备注（编辑页填写，在剧本信息表中同步展示） */
+  remark?: string;
 }
 
 /** 登场人物配置的模组身份 id 列表。AHR 等双列 `roleIds` 时保留 [表, 里] 两项且允许相同 id；其余情况与旧数据兼容 */
