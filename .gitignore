@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+build/
+*.tsbuildinfo
+
+# Environment & secrets（勿提交真实隧道 URL、Token、本机专用配置）
+.env
+.env.*
+!.env.example
+!.env.sample
+local.env
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+**/credentials/*.json
+
+# Logs & diagnostics
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Test / coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Caches (tooling)
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE / editor（个人设置、本地路径等多在 settings；共享扩展建议可保留）
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# VS Code：默认忽略整目录，仅保留「推荐扩展」清单供开源协作者使用
+.vscode/*
+!.vscode/extensions.json
+
+# Cursor（本地工作流、可能含 MCP/路径等）
+.cursor/
+# 若项目根存在含 //registry...:_authToken 的 .npmrc，可取消下一行或改用环境变量认证：
+# .npmrc
