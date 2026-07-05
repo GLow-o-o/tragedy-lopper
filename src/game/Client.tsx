@@ -122,10 +122,17 @@ interface GameLogEntry {
 
 const MAX_GAME_LOG_ENTRIES = 120;//游戏日志最大条数
 
-function formatGameLogLine(log: GameLogEntry): string {
+function formatGameLogLine(log: GameLogEntry, isMastermindView: boolean): string {
   const header = `[${log.ts}] [L${log.loop}-D${log.day}] [${log.phase}]`;
   const body = `${log.actor}：${log.action}`;
-  return log.detail ? `${header}\n${body}\n${log.detail}` : `${header}\n${body}`;
+  let detail = log.detail;
+  if (detail && !isMastermindView && log.action === '角色状态播报※') {
+    detail = detail
+      .split('\n')
+      .map((line) => line.replace(/（[^）]+）(?=@)/g, ''))
+      .join('\n');
+  }
+  return detail ? `${header}\n${body}\n${detail}` : `${header}\n${body}`;
 }
 
 /** 版图 2×2 顺序：左上医院、右上神社、左下都市、右下学校 */
@@ -1630,11 +1637,13 @@ const Board = ({ G, ctx, moves, playerID, matchData, isMultiplayer }: any) => {
       const placements = area === Area.Faraway ? farawayNpcPlacements : (placementsByArea[area] ?? []);
       for (const p of placements) {
         const tok = getNpcTokenCounts(p.npcId);
-        lines.push(`${p.name}（${mastermindRoleLabels(p, roleDisplayName)}）@${AREA_DISPLAY_NAME[area]}：友${tok.friendly} / 不${tok.unrest}/${tok.unrestMax} / 密${tok.plot}`);
+        const roleLabel = isMastermindView ? mastermindRoleLabels(p, roleDisplayName) : '';
+        const rolePart = roleLabel ? `（${roleLabel}）` : '';
+        lines.push(`${p.name}${rolePart}@${AREA_DISPLAY_NAME[area]}：友${tok.friendly} / 不${tok.unrest}/${tok.unrestMax} / 密${tok.plot}`);
       }
     }
     return lines.length > 0 ? lines.join('\n') : '暂无角色在版图上';
-  }, [farawayNpcPlacements, getNpcTokenCounts, placementsByArea]);
+  }, [farawayNpcPlacements, getNpcTokenCounts, isMastermindView, placementsByArea, roleDisplayName]);
 
   const buildBoardTokenSummaryText = useCallback((): string => {
     const areaOrder: Area[] = [Area.Hospital, Area.Shrine, Area.City, Area.School, Area.Faraway];
@@ -3986,7 +3995,7 @@ const Board = ({ G, ctx, moves, playerID, matchData, isMultiplayer }: any) => {
                 ) : (
                   [...gameLogs].reverse().map((log) => (
                     <article key={log.id} style={styles.gameLogItem}>
-                      <div style={styles.gameLogLine}>{formatGameLogLine(log)}</div>
+                      <div style={styles.gameLogLine}>{formatGameLogLine(log, isMastermindView)}</div>
                     </article>
                   ))
                 )}

@@ -21,8 +21,8 @@ export const FS_001: Scenario = {
       {
         "npcId": "npc_01",
         "roleId": "Person",
-        "delayedAppearance": true,
-        "appearanceTimingDescription": "111"
+        "delayedAppearance": false,
+        "appearanceTimingDescription": ""
       },
       {
         "npcId": "npc_02",
