@@ -20,7 +20,7 @@ export const Rich_Mans_Daughter: npc = {
     thoughts: '在学校里不那么常见的大小姐，因为限度很低所以很容易触发事件',
     initialArea: [Area.School],
     forbiddenAreas: [],
-    instability: 2,
+    instability: 1,
     npcState: {
         currentArea: Area.School,
         instability: 0,
